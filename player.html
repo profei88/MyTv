@@ -630,7 +630,7 @@
                 liveSyncDurationCount: 3,
                 liveDurationInfinity: false
             };
-            
+            const defaultSpeed = localStorage.getItem('dplayer-speed') ? Number(localStorage.getItem('dplayer-speed')) : 1.5;
             // 创建DPlayer实例
             dp = new DPlayer({
                 container: document.getElementById('player'),
@@ -812,6 +812,12 @@
                 
                 // 启动定期保存播放进度
                 startProgressSaveInterval();
+
+                 dp.speed(defaultSpeed);
+            });
+
+            dp.on('ratechange', function () {
+                localStorage.setItem('dplayer-speed', dp.video.playbackRate);
             });
 
             dp.on('error', function() {
